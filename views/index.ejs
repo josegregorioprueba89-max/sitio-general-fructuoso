@@ -3,38 +3,33 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= titulo %></title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div class="container">
-        <header class="main-header">
+    <div class="main-container">
+        <header class="top-nav">
             <h1>General Juan Fructuoso Heredia</h1>
-            <nav class="main-nav">
+            <nav>
                 <a href="/">Inicio</a>
-                <a href="/perfil">Ver Perfil Completo</a>
+                <a href="/perfil">Perfil Profesional</a>
             </nav>
         </header>
 
-        <main class="content-wrapper">
-            <section class="hero">
-                <h2>Bienvenido al Portal Oficial</h2>
-                <div class="divider"></div>
+        <main class="grid-layout">
+            <!-- Sección Principal -->
+            <section class="hero-box">
+                <h2>Portal Oficial</h2>
                 <p><%= mensaje %></p>
             </section>
 
-            <section class="info-section">
-                <div class="card">
-                    <h3>Documentación Histórica</h3>
-                    <p>Acceso a la trayectoria y archivos oficiales del General.</p>
-                </div>
+            <!-- Sección de Documentación (Espacio separado) -->
+            <section class="content-box">
+                <h3>Documentación Histórica</h3>
+                <p>Aquí encontrará la cronología detallada y archivos de referencia del General.</p>
+                <button class="btn-primary">Ver Archivos</button>
             </section>
         </main>
-
-        <footer class="main-footer">
-            <p>&copy; 2026 Sitio Oficial del General</p>
-        </footer>
     </div>
 </body>
 </html>
