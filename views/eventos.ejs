@@ -1,1 +1,90 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventos — Juan Manuel Fructuoso Heredia</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      Juan Manuel Fructuoso Heredia
+      <span>General (r) · Abogado · Escritor</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/libros">Libros</a></li>
+      <li><a href="/biografia">Biografía</a></li>
+      <li><a href="/eventos" class="active">Eventos</a></li>
+      <li><a href="/galeria">Galería</a></li>
+      <li><a href="/registro" class="nav-cta">Registrarse</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <span class="section-label">Agenda</span>
+    <h1>Eventos</h1>
+    <p>Presentaciones, conferencias y firmas de libros en República Dominicana y el mundo.</p>
+  </div>
+
+  <% if (typeof query !== 'undefined' && query && query.inscrito) { %>
+  <div class="form-success">✅ ¡<%= query.inscrito %>, tu inscripción fue recibida! Te contactaremos con los detalles.</div>
+  <% } %>
+
+  <div class="events-list">
+    <% eventos.forEach(evento => { %>
+    <%
+      const fechaEvento = new Date(evento.fecha + 'T00:00:00');
+      const dia = fechaEvento.getDate();
+      const mes = fechaEvento.toLocaleDateString('es-DO', { month: 'short' }).toUpperCase();
+    %>
+    <div class="event-card">
+      <div class="event-date-block">
+        <div class="event-day"><%= dia %></div>
+        <div class="event-month"><%= mes %></div>
+      </div>
+      <div class="event-info">
+        <span class="event-type-badge"><%= evento.tipo %></span>
+        <h3 class="event-title"><%= evento.titulo %></h3>
+        <p class="event-meta">🕐 <%= evento.hora %> · 📍 <%= evento.lugar %>, <%= evento.ciudad %></p>
+        <p style="font-size:0.83rem; color:var(--text-muted); margin-top:6px;"><%= evento.descripcion %></p>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">Cupos: <%= evento.cupos %></p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px; min-width:140px;">
+        <% if (evento.inscripcionAbierta) { %>
+        <form action="/inscribirse" method="POST">
+          <input type="hidden" name="eventoId" value="<%= evento.id %>" />
+          <input type="text" name="nombre" placeholder="Tu nombre" class="form-input" style="margin-bottom:8px; font-size:0.8rem; padding:8px 10px;" required />
+          <button type="submit" class="btn btn-primary btn-sm btn-full">Inscribirse</button>
+        </form>
+        <% } else { %>
+        <span style="font-size:0.78rem; color:var(--text-muted);">Inscripciones cerradas</span>
+        <% } %>
+        <a href="<%= evento.mapa %>" target="_blank" rel="noopener" class="btn btn-outline btn-sm">📍 Ver mapa</a>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-name">Juan Manuel Fructuoso Heredia</div>
+    <ul class="footer-links">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/libros">Libros</a></li>
+      <li><a href="/biografia">Biografía</a></li>
+      <li><a href="/eventos">Eventos</a></li>
+      <li><a href="/galeria">Galería</a></li>
+    </ul>
+    <p class="footer-copy">&copy; <%= new Date().getFullYear() %> Juan Manuel Fructuoso Heredia. Todos los derechos reservados.</p>
+  </div>
+</footer>
+</body>
+</html>
