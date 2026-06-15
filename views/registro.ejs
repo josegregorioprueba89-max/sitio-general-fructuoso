@@ -20,42 +20,105 @@
       <li><a href="/biografia">Biografía</a></li>
       <li><a href="/eventos">Eventos</a></li>
       <li><a href="/galeria">Galería</a></li>
-      <li><a href="/registro" class="nav-cta active">Registrarse</a></li>
+      <li><a href="/registro" class="nav-cta">Registrarse</a></li>
     </ul>
   </div>
 </nav>
 
 <div class="auth-wrapper">
   <div class="auth-card">
+
     <h1 class="auth-title">Crear cuenta</h1>
     <p class="auth-subtitle">Únete a la comunidad de lectores de <%= autor.nombre %></p>
 
+    <!-- MENSAJE DE ERROR -->
     <% if (error) { %>
-    <div class="form-error"><%= error %></div>
+    <div class="form-error" role="alert">
+      ⚠️ <%= error %>
+    </div>
     <% } %>
 
+    <!-- MENSAJE DE ÉXITO -->
     <% if (mensaje) { %>
-    <div class="form-success"><%= mensaje %></div>
-    <a href="/" class="btn btn-primary btn-full" style="margin-top:16px;">Ir al inicio</a>
+    <div class="form-success" role="status">
+      ✅ <%= mensaje %>
+    </div>
+    <a href="/" class="btn btn-primary btn-full" style="margin-top:16px;">
+      Ir al inicio
+    </a>
+
     <% } else { %>
-    <form action="/registro" method="POST">
+
+    <!-- FORMULARIO -->
+    <form action="/registro" method="POST" novalidate>
+
       <div class="form-group">
         <label class="form-label" for="nombre">Nombre completo</label>
-        <input class="form-input" type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required />
+        <input
+          class="form-input"
+          type="text"
+          id="nombre"
+          name="nombre"
+          placeholder="Tu nombre completo"
+          value="<%= typeof nombreVal !== 'undefined' ? nombreVal : '' %>"
+          autocomplete="name"
+          required
+        />
       </div>
+
       <div class="form-group">
         <label class="form-label" for="email">Correo electrónico</label>
-        <input class="form-input" type="email" id="email" name="email" placeholder="tu@correo.com" required />
+        <input
+          class="form-input"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="tu@correo.com"
+          value="<%= typeof emailVal !== 'undefined' ? emailVal : '' %>"
+          autocomplete="email"
+          required
+        />
       </div>
+
       <div class="form-group">
         <label class="form-label" for="password">Contraseña</label>
-        <input class="form-input" type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" required minlength="8" />
+        <input
+          class="form-input"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Mínimo 8 caracteres"
+          autocomplete="new-password"
+          required
+          minlength="8"
+        />
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:5px; display:block;">
+          Mínimo 8 caracteres.
+        </span>
       </div>
-      <button type="submit" class="btn btn-primary btn-full">Crear cuenta</button>
+
+      <div class="form-group">
+        <label class="form-label" for="password2">Confirmar contraseña</label>
+        <input
+          class="form-input"
+          type="password"
+          id="password2"
+          name="password2"
+          placeholder="Repite tu contraseña"
+          autocomplete="new-password"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">
+        Crear cuenta
+      </button>
     </form>
+
     <p style="text-align:center; margin-top:20px; font-size:0.83rem; color:var(--text-muted);">
       ¿Ya tienes cuenta? <a href="/">Volver al inicio</a>
     </p>
+
     <% } %>
   </div>
 </div>
@@ -73,5 +136,6 @@
     <p class="footer-copy">&copy; <%= new Date().getFullYear() %> Juan Manuel Fructuoso Heredia. Todos los derechos reservados.</p>
   </div>
 </footer>
+
 </body>
 </html>
