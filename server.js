@@ -1,4 +1,4 @@
-// server.js
+// servidor.js
 const express = require('express');
 const app = express();
 // Cambiado a 8080 para compatibilidad con futuros despliegues
