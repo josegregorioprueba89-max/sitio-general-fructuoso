@@ -1,27 +1,31 @@
-<!-- views/index.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= titulo %></title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <header>
-        <h1><%= titulo %></h1>
+        <h1><%= nombre %></h1>
         <nav>
-            <ul>
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/biografia">Biografía</a></li>
-                <li><a href="/libros">Libros</a></li>
-                <li><a href="/eventos">Eventos</a></li>
-            </ul>
+            <a href="/">Inicio</a>
         </nav>
     </header>
-    
-    <main>
-        <p><%= mensaje %></p>
-        <!-- Aquí pondremos los módulos de multimedia después -->
+
+    <main style="padding: 20px; max-width: 800px; margin: auto;">
+        <h2>Sobre el General</h2>
+        <p><%= descripcion %></p>
+        
+        <div class="perfil-contenido">
+            <h3>Trayectoria Destacada</h3>
+            <p>Aquí se detallará la historia, los logros y la carrera militar del General Juan Fructuoso Heredia.</p>
+        </div>
     </main>
+
+    <footer style="text-align: center; margin-top: 40px; color: #7f8c8d;">
+        <p>&copy; 2026 Sitio Oficial del General</p>
+    </footer>
 </body>
 </html>
