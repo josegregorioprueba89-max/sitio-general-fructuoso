@@ -1,7 +1,6 @@
 // servidor.js
 const express = require('express');
 const app = express();
-// Cambiado a 8080 para compatibilidad con futuros despliegues
 const PORT = process.env.PORT || 8080;
 
 // Configuración para usar plantillas EJS
@@ -13,6 +12,15 @@ app.get('/', (req, res) => {
     res.render('index', { 
         titulo: 'General Juan Fructuoso Heredia',
         mensaje: 'Bienvenido al sitio oficial.' 
+    });
+});
+
+// Nueva ruta para el Perfil
+app.get('/perfil', (req, res) => {
+    res.render('perfil', { 
+        titulo: 'Perfil del General',
+        nombre: 'Juan Fructuoso Heredia',
+        descripcion: 'Biografía y trayectoria destacada.'
     });
 });
 
