@@ -11,7 +11,8 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.render('index', { 
         titulo: 'General Juan Fructuoso Heredia',
-        mensaje: 'Bienvenido al sitio oficial.' 
+        mensaje: 'Bienvenido al sitio oficial.',
+        nombre: 'General Juan Fructuoso Heredia' 
     });
 });
 
