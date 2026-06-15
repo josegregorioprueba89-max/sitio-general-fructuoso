@@ -4,7 +4,7 @@ const path = require('path');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));   // ✅ CORREGIDO: era 'publico'
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -46,36 +46,16 @@ const libros = [
   }
 ];
 
-// ─── LOGROS Y RECONOCIMIENTOS ──────────────────────────────────────────────────
+// ─── LOGROS ────────────────────────────────────────────────────────────────────
 const logros = {
   profesionales: [
-    {
-      año: '1990s–2022',
-      titulo: 'General de la Policía Nacional Dominicana',
-      descripcion: 'Más de 30 años de carrera investigativa al servicio del Estado dominicano.'
-    },
-    {
-      año: '2000–2010',
-      titulo: 'Investigador del Crimen Organizado',
-      descripcion: 'Participó directamente en operativos y análisis contra el narcotráfico en la isla.'
-    },
-    {
-      año: '2022',
-      titulo: 'Abogado en ejercicio',
-      descripcion: 'Litigante activo con especialización en derecho penal y seguridad ciudadana.'
-    }
+    { año: '1990s–2022', titulo: 'General de la Policía Nacional Dominicana', descripcion: 'Más de 30 años de carrera investigativa al servicio del Estado dominicano.' },
+    { año: '2000–2010', titulo: 'Investigador del Crimen Organizado', descripcion: 'Participó directamente en operativos y análisis contra el narcotráfico en la isla.' },
+    { año: '2022',      titulo: 'Abogado en ejercicio', descripcion: 'Litigante activo con especialización en derecho penal y seguridad ciudadana.' }
   ],
   literarios: [
-    {
-      año: '2022',
-      titulo: 'Publicación en Amazon KDP',
-      descripcion: 'Lanzamiento de "Capicúa en Ajedrez" disponible para lectores en todo el mundo.'
-    },
-    {
-      año: '2022',
-      titulo: 'Cobertura en Diario Libre',
-      descripcion: 'La narco-novela fue reseñada por medios nacionales de República Dominicana.'
-    }
+    { año: '2022', titulo: 'Publicación en Amazon KDP', descripcion: 'Lanzamiento de "Capicúa en Ajedrez" disponible para lectores en todo el mundo.' },
+    { año: '2022', titulo: 'Cobertura en Diario Libre', descripcion: 'La narco-novela fue reseñada por medios nacionales de República Dominicana.' }
   ]
 };
 
@@ -111,53 +91,27 @@ const eventos = [
 
 // ─── RESEÑAS ───────────────────────────────────────────────────────────────────
 let resenas = [
-  {
-    id: 1,
-    libroId: 1,
-    usuario: 'María G.',
-    rating: 5,
-    comentario: 'Una novela que te atrapa desde la primera página. La experiencia real del autor se siente en cada línea.',
-    fecha: '2024-03-10',
-    aprobada: true
-  },
-  {
-    id: 2,
-    libroId: 1,
-    usuario: 'Carlos R.',
-    rating: 4,
-    comentario: 'Increíble cómo narra hechos reales de manera tan cercana. Muy recomendada.',
-    fecha: '2024-05-22',
-    aprobada: true
-  }
+  { id: 1, libroId: 1, usuario: 'María G.',  rating: 5, comentario: 'Una novela que te atrapa desde la primera página. La experiencia real del autor se siente en cada línea.', fecha: '2024-03-10', aprobada: true },
+  { id: 2, libroId: 1, usuario: 'Carlos R.', rating: 4, comentario: 'Increíble cómo narra hechos reales de manera tan cercana. Muy recomendada.',                               fecha: '2024-05-22', aprobada: true }
 ];
 
 // ─── USUARIOS ──────────────────────────────────────────────────────────────────
 let usuarios = [
-  {
-    id: 1,
-    nombre: 'Admin',
-    email: 'admin@fructuosoheredia.com',
-    rol: 'admin',
-    fechaRegistro: '2024-01-01'
-  }
+  { id: 1, nombre: 'Admin', email: 'admin@fructuosoheredia.com', rol: 'admin', fechaRegistro: '2024-01-01' }
 ];
 
-// ─── RUTAS ─────────────────────────────────────────────────────────────────────
+// ─── HELPERS ───────────────────────────────────────────────────────────────────
+function esEmailValido(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// ─── RUTAS GET ─────────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
-  res.render('index', {
-    autor,
-    libros,
-    eventos,
-    resenas: resenas.filter(r => r.aprobada)
-  });
+  res.render('index', { autor, libros, eventos, resenas: resenas.filter(r => r.aprobada) });
 });
 
 app.get('/libros', (req, res) => {
-  res.render('libros', {
-    autor,
-    libros,
-    resenas: resenas.filter(r => r.aprobada)
-  });
+  res.render('libros', { autor, libros, resenas: resenas.filter(r => r.aprobada) });
 });
 
 app.get('/libros/:id', (req, res) => {
@@ -180,29 +134,55 @@ app.get('/galeria', (req, res) => {
 });
 
 app.get('/registro', (req, res) => {
-  res.render('registro', { autor, mensaje: null, error: null });
+  res.render('registro', { autor, mensaje: null, error: null, nombreVal: '', emailVal: '' });
 });
 
+// ─── POST /registro — LÓGICA AUDITADA ─────────────────────────────────────────
 app.post('/registro', (req, res) => {
-  const { nombre, email, password } = req.body;
+  // 1. Extraer y limpiar campos
+  const nombre   = (req.body.nombre   || '').trim();
+  const email    = (req.body.email    || '').trim().toLowerCase();
+  const password  = (req.body.password  || '');
+  const password2 = (req.body.password2 || '');
 
-  if (!nombre || !email || !password) {
-    return res.render('registro', {
-      autor,
-      mensaje: null,
-      error: 'Todos los campos son obligatorios.'
-    });
+  const renderError = (msg) => res.render('registro', {
+    autor,
+    mensaje: null,
+    error: msg,
+    nombreVal: nombre,   // repobla el form para no perder lo escrito
+    emailVal: email
+  });
+
+  // 2. Validaciones server-side (no confiar solo en el HTML)
+  if (!nombre || !email || !password || !password2) {
+    return renderError('Todos los campos son obligatorios.');
   }
 
+  if (nombre.length < 2) {
+    return renderError('El nombre debe tener al menos 2 caracteres.');
+  }
+
+  if (!esEmailValido(email)) {
+    return renderError('El formato del correo electrónico no es válido.');
+  }
+
+  if (password.length < 8) {
+    return renderError('La contraseña debe tener al menos 8 caracteres.');
+  }
+
+  if (password !== password2) {
+    return renderError('Las contraseñas no coinciden.');
+  }
+
+  // 3. Verificar duplicado
   const existe = usuarios.find(u => u.email === email);
   if (existe) {
-    return res.render('registro', {
-      autor,
-      mensaje: null,
-      error: 'Este correo ya está registrado.'
-    });
+    return renderError('Este correo ya está registrado. Usa otro o vuelve al inicio.');
   }
 
+  // 4. Guardar usuario
+  // NOTA: En producción real usar bcrypt para hashear el password.
+  // Aquí se omite porque no está en las dependencias del package.json.
   const nuevoUsuario = {
     id: usuarios.length + 1,
     nombre,
@@ -212,32 +192,44 @@ app.post('/registro', (req, res) => {
   };
   usuarios.push(nuevoUsuario);
 
+  // 5. Respuesta de éxito — re-render (no redirect) para mostrar mensaje
   res.render('registro', {
     autor,
-    mensaje: `¡Bienvenido, ${nombre}! Tu cuenta ha sido creada.`,
-    error: null
+    mensaje: `¡Bienvenido, ${nombre}! Tu cuenta ha sido creada exitosamente.`,
+    error: null,
+    nombreVal: '',
+    emailVal: ''
   });
 });
 
+// ─── POST /resena ──────────────────────────────────────────────────────────────
 app.post('/resena', (req, res) => {
-  const { libroId, usuario, rating, comentario } = req.body;
-  if (!usuario || !rating || !comentario) {
+  const libroId    = parseInt(req.body.libroId) || 0;
+  const usuario    = (req.body.usuario   || '').trim();
+  const rating     = parseInt(req.body.rating) || 0;
+  const comentario = (req.body.comentario || '').trim();
+
+  if (!usuario || !rating || !comentario || rating < 1 || rating > 5) {
     return res.redirect('/libros/' + libroId);
   }
+
   resenas.push({
     id: resenas.length + 1,
-    libroId: parseInt(libroId),
+    libroId,
     usuario,
-    rating: parseInt(rating),
+    rating,
     comentario,
     fecha: new Date().toISOString().split('T')[0],
     aprobada: true
   });
+
   res.redirect('/libros/' + libroId + '?resena=enviada');
 });
 
+// ─── POST /inscribirse ─────────────────────────────────────────────────────────
 app.post('/inscribirse', (req, res) => {
-  const { nombre } = req.body;
+  const nombre = (req.body.nombre || '').trim();
+  if (!nombre) return res.redirect('/eventos');
   res.redirect('/eventos?inscrito=' + encodeURIComponent(nombre));
 });
 
