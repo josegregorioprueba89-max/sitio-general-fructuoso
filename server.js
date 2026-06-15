@@ -4,11 +4,11 @@ const path = require('path');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'publico')));
+app.use(express.static(path.join(__dirname, 'public')));   // ✅ CORREGIDO: era 'publico'
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ─── DATOS DEL AUTOR ─────────────────────────────────────────────────────────
+// ─── DATOS DEL AUTOR ──────────────────────────────────────────────────────────
 const autor = {
   nombre: 'Juan Manuel Fructuoso Heredia',
   titulo: 'General (r) · Abogado · Escritor',
@@ -27,7 +27,7 @@ const autor = {
   }
 };
 
-// ─── DATOS DE LIBROS ──────────────────────────────────────────────────────────
+// ─── DATOS DE LIBROS ───────────────────────────────────────────────────────────
 const libros = [
   {
     id: 1,
@@ -46,20 +46,40 @@ const libros = [
   }
 ];
 
-// ─── LOGROS Y RECONOCIMIENTOS ─────────────────────────────────────────────────
+// ─── LOGROS Y RECONOCIMIENTOS ──────────────────────────────────────────────────
 const logros = {
   profesionales: [
-    { año: '1990s–2022', titulo: 'General de la Policía Nacional Dominicana', descripcion: 'Más de 30 años de carrera investigativa al servicio del Estado dominicano.' },
-    { año: '2000–2010', titulo: 'Investigador del Crimen Organizado', descripcion: 'Participó directamente en operativos y análisis contra el narcotráfico en la isla.' },
-    { año: '2022', titulo: 'Abogado en ejercicio', descripcion: 'Litigante activo con especialización en derecho penal y seguridad ciudadana.' }
+    {
+      año: '1990s–2022',
+      titulo: 'General de la Policía Nacional Dominicana',
+      descripcion: 'Más de 30 años de carrera investigativa al servicio del Estado dominicano.'
+    },
+    {
+      año: '2000–2010',
+      titulo: 'Investigador del Crimen Organizado',
+      descripcion: 'Participó directamente en operativos y análisis contra el narcotráfico en la isla.'
+    },
+    {
+      año: '2022',
+      titulo: 'Abogado en ejercicio',
+      descripcion: 'Litigante activo con especialización en derecho penal y seguridad ciudadana.'
+    }
   ],
   literarios: [
-    { año: '2022', titulo: 'Publicación en Amazon KDP', descripcion: 'Lanzamiento de "Capicúa en Ajedrez" disponible para lectores en todo el mundo.' },
-    { año: '2022', titulo: 'Cobertura en Diario Libre', descripcion: 'La narco-novela fue reseñada por medios nacionales de República Dominicana.' }
+    {
+      año: '2022',
+      titulo: 'Publicación en Amazon KDP',
+      descripcion: 'Lanzamiento de "Capicúa en Ajedrez" disponible para lectores en todo el mundo.'
+    },
+    {
+      año: '2022',
+      titulo: 'Cobertura en Diario Libre',
+      descripcion: 'La narco-novela fue reseñada por medios nacionales de República Dominicana.'
+    }
   ]
 };
 
-// ─── EVENTOS ──────────────────────────────────────────────────────────────────
+// ─── EVENTOS ───────────────────────────────────────────────────────────────────
 const eventos = [
   {
     id: 1,
@@ -89,24 +109,55 @@ const eventos = [
   }
 ];
 
-// ─── RESEÑAS ──────────────────────────────────────────────────────────────────
+// ─── RESEÑAS ───────────────────────────────────────────────────────────────────
 let resenas = [
-  { id: 1, libroId: 1, usuario: 'María G.', rating: 5, comentario: 'Una novela que te atrapa desde la primera página. La experiencia real del autor se siente en cada línea.', fecha: '2024-03-10', aprobada: true },
-  { id: 2, libroId: 1, usuario: 'Carlos R.', rating: 4, comentario: 'Increíble cómo narra hechos reales de manera tan cercana. Muy recomendada.', fecha: '2024-05-22', aprobada: true }
+  {
+    id: 1,
+    libroId: 1,
+    usuario: 'María G.',
+    rating: 5,
+    comentario: 'Una novela que te atrapa desde la primera página. La experiencia real del autor se siente en cada línea.',
+    fecha: '2024-03-10',
+    aprobada: true
+  },
+  {
+    id: 2,
+    libroId: 1,
+    usuario: 'Carlos R.',
+    rating: 4,
+    comentario: 'Increíble cómo narra hechos reales de manera tan cercana. Muy recomendada.',
+    fecha: '2024-05-22',
+    aprobada: true
+  }
 ];
 
-// ─── USUARIOS ─────────────────────────────────────────────────────────────────
+// ─── USUARIOS ──────────────────────────────────────────────────────────────────
 let usuarios = [
-  { id: 1, nombre: 'Admin', email: 'admin@fructuosoheredia.com', rol: 'admin', fechaRegistro: '2024-01-01' }
+  {
+    id: 1,
+    nombre: 'Admin',
+    email: 'admin@fructuosoheredia.com',
+    rol: 'admin',
+    fechaRegistro: '2024-01-01'
+  }
 ];
 
-// ─── RUTAS ────────────────────────────────────────────────────────────────────
+// ─── RUTAS ─────────────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
-  res.render('index', { autor, libros, eventos, resenas: resenas.filter(r => r.aprobada) });
+  res.render('index', {
+    autor,
+    libros,
+    eventos,
+    resenas: resenas.filter(r => r.aprobada)
+  });
 });
 
 app.get('/libros', (req, res) => {
-  res.render('libros', { autor, libros, resenas: resenas.filter(r => r.aprobada) });
+  res.render('libros', {
+    autor,
+    libros,
+    resenas: resenas.filter(r => r.aprobada)
+  });
 });
 
 app.get('/libros/:id', (req, res) => {
@@ -134,26 +185,45 @@ app.get('/registro', (req, res) => {
 
 app.post('/registro', (req, res) => {
   const { nombre, email, password } = req.body;
+
   if (!nombre || !email || !password) {
-    return res.render('registro', { autor, mensaje: null, error: 'Todos los campos son obligatorios.' });
+    return res.render('registro', {
+      autor,
+      mensaje: null,
+      error: 'Todos los campos son obligatorios.'
+    });
   }
+
   const existe = usuarios.find(u => u.email === email);
   if (existe) {
-    return res.render('registro', { autor, mensaje: null, error: 'Este correo ya está registrado.' });
+    return res.render('registro', {
+      autor,
+      mensaje: null,
+      error: 'Este correo ya está registrado.'
+    });
   }
+
   const nuevoUsuario = {
     id: usuarios.length + 1,
-    nombre, email,
+    nombre,
+    email,
     rol: 'lector',
     fechaRegistro: new Date().toISOString().split('T')[0]
   };
   usuarios.push(nuevoUsuario);
-  res.render('registro', { autor, mensaje: `¡Bienvenido, ${nombre}! Tu cuenta ha sido creada.`, error: null });
+
+  res.render('registro', {
+    autor,
+    mensaje: `¡Bienvenido, ${nombre}! Tu cuenta ha sido creada.`,
+    error: null
+  });
 });
 
 app.post('/resena', (req, res) => {
   const { libroId, usuario, rating, comentario } = req.body;
-  if (!usuario || !rating || !comentario) return res.redirect('/libros/' + libroId);
+  if (!usuario || !rating || !comentario) {
+    return res.redirect('/libros/' + libroId);
+  }
   resenas.push({
     id: resenas.length + 1,
     libroId: parseInt(libroId),
@@ -168,8 +238,9 @@ app.post('/resena', (req, res) => {
 
 app.post('/inscribirse', (req, res) => {
   const { nombre } = req.body;
-  res.redirect('/eventos?inscrito=' + nombre);
+  res.redirect('/eventos?inscrito=' + encodeURIComponent(nombre));
 });
 
+// ─── INICIO ────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`✅ Portal corriendo en puerto ${PORT}`));
