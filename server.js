@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'vistas'));
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'publico')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -141,7 +141,12 @@ app.post('/registro', (req, res) => {
   if (existe) {
     return res.render('registro', { autor, mensaje: null, error: 'Este correo ya está registrado.' });
   }
-  const nuevoUsuario = { id: usuarios.length + 1, nombre, email, rol: 'lector', fechaRegistro: new Date().toISOString().split('T')[0] };
+  const nuevoUsuario = {
+    id: usuarios.length + 1,
+    nombre, email,
+    rol: 'lector',
+    fechaRegistro: new Date().toISOString().split('T')[0]
+  };
   usuarios.push(nuevoUsuario);
   res.render('registro', { autor, mensaje: `¡Bienvenido, ${nombre}! Tu cuenta ha sido creada.`, error: null });
 });
@@ -152,7 +157,9 @@ app.post('/resena', (req, res) => {
   resenas.push({
     id: resenas.length + 1,
     libroId: parseInt(libroId),
-    usuario, rating: parseInt(rating), comentario,
+    usuario,
+    rating: parseInt(rating),
+    comentario,
     fecha: new Date().toISOString().split('T')[0],
     aprobada: true
   });
@@ -164,5 +171,5 @@ app.post('/inscribirse', (req, res) => {
   res.redirect('/eventos?inscrito=' + nombre);
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`✅ Portal corriendo en puerto ${PORT}`));
