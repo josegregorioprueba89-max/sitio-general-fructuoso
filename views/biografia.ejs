@@ -1,1 +1,109 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biografía — Juan Manuel Fructuoso Heredia</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      Juan Manuel Fructuoso Heredia
+      <span>General (r) · Abogado · Escritor</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/libros">Libros</a></li>
+      <li><a href="/biografia" class="active">Biografía</a></li>
+      <li><a href="/eventos">Eventos</a></li>
+      <li><a href="/galeria">Galería</a></li>
+      <li><a href="/registro" class="nav-cta">Registrarse</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <span class="section-label">Sobre el autor</span>
+    <h1>Biografía</h1>
+    <p>Más de tres décadas al servicio de la justicia dominicana, ahora contadas en sus propias palabras.</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 300px; gap:60px; align-items:start; margin-bottom:72px;">
+    <div>
+      <% autor.bio.forEach((parrafo, idx) => { %>
+      <p style="color:var(--text-secondary); line-height:1.85; font-size:0.98rem; margin-bottom:20px;"><%= parrafo %></p>
+      <% }) %>
+    </div>
+    <div>
+      <div class="hero-photo-placeholder" style="border-radius:var(--radius-lg); border:1px solid var(--border); aspect-ratio:3/4; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+        <span style="font-size:2rem;">📷</span>
+        <span style="font-size:0.8rem; color:var(--text-muted);">Foto del autor</span>
+      </div>
+      <div style="margin-top:16px; padding:20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);">
+        <p class="section-label" style="margin-bottom:12px;">Redes y contacto</p>
+        <a href="<%= autor.redes.amazon %>" target="_blank" rel="noopener" class="amazon-badge" style="display:flex; margin-bottom:10px;">
+          📦 Ver en Amazon
+        </a>
+        <a href="<%= autor.redes.facebook %>" class="btn btn-outline btn-sm btn-full" style="margin-bottom:8px;">Facebook</a>
+        <a href="<%= autor.redes.instagram %>" class="btn btn-outline btn-sm btn-full">Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border); padding-top:60px; margin-bottom:60px;">
+    <div class="section-header">
+      <div>
+        <span class="section-label">Carrera</span>
+        <h2 class="section-title">Trayectoria Profesional</h2>
+      </div>
+    </div>
+    <div class="timeline">
+      <% logros.profesionales.forEach(logro => { %>
+      <div class="timeline-item">
+        <p class="timeline-year"><%= logro.año %></p>
+        <p class="timeline-title"><%= logro.titulo %></p>
+        <p class="timeline-desc"><%= logro.descripcion %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border); padding-top:60px; margin-bottom:72px;">
+    <div class="section-header">
+      <div>
+        <span class="section-label">Literatura</span>
+        <h2 class="section-title">Obra Literaria</h2>
+      </div>
+    </div>
+    <div class="timeline">
+      <% logros.literarios.forEach(logro => { %>
+      <div class="timeline-item">
+        <p class="timeline-year"><%= logro.año %></p>
+        <p class="timeline-title"><%= logro.titulo %></p>
+        <p class="timeline-desc"><%= logro.descripcion %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-name">Juan Manuel Fructuoso Heredia</div>
+    <ul class="footer-links">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/libros">Libros</a></li>
+      <li><a href="/biografia">Biografía</a></li>
+      <li><a href="/eventos">Eventos</a></li>
+      <li><a href="/galeria">Galería</a></li>
+    </ul>
+    <p class="footer-copy">&copy; <%= new Date().getFullYear() %> Juan Manuel Fructuoso Heredia. Todos los derechos reservados.</p>
+  </div>
+</footer>
+</body>
+</html>
