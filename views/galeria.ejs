@@ -1,1 +1,117 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galería — Juan Manuel Fructuoso Heredia</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      Juan Manuel Fructuoso Heredia
+      <span>General (r) · Abogado · Escritor</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/libros">Libros</a></li>
+      <li><a href="/biografia">Biografía</a></li>
+      <li><a href="/eventos">Eventos</a></li>
+      <li><a href="/galeria" class="active">Galería</a></li>
+      <li><a href="/registro" class="nav-cta">Registrarse</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <span class="section-label">Multimedia</span>
+    <h1>Galería</h1>
+    <p>Fotografías, videos y cobertura mediática del autor y sus obras.</p>
+  </div>
+
+  <div style="margin-bottom:60px;">
+    <div class="section-header">
+      <div>
+        <span class="section-label">Video</span>
+        <h2 class="section-title">Videos</h2>
+      </div>
+    </div>
+    <div class="media-grid">
+      <div class="video-embed">
+        <div style="width:100%; aspect-ratio:16/9; background:var(--bg-subtle); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; color:var(--text-muted);">
+          <span style="font-size:3rem;">▶️</span>
+          <span style="font-size:0.85rem;">Video próximamente</span>
+        </div>
+        <p class="video-caption">Entrevista sobre Capicúa en Ajedrez</p>
+      </div>
+      <div class="video-embed">
+        <div style="width:100%; aspect-ratio:16/9; background:var(--bg-subtle); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; color:var(--text-muted);">
+          <span style="font-size:3rem;">▶️</span>
+          <span style="font-size:0.85rem;">Video próximamente</span>
+        </div>
+        <p class="video-caption">Presentación del libro — Santo Domingo</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border); padding-top:60px; margin-bottom:60px;">
+    <div class="section-header">
+      <div>
+        <span class="section-label">Fotografías</span>
+        <h2 class="section-title">Fotos</h2>
+      </div>
+    </div>
+    <div class="photo-grid">
+      <% for(let i = 0; i < 8; i++) { %>
+      <div class="photo-item">
+        <div class="photo-placeholder" style="flex-direction:column; gap:6px;">
+          <span style="font-size:1.5rem;">📷</span>
+          <span style="font-size:0.65rem;">Foto <%= i + 1 %></span>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border); padding-top:60px; margin-bottom:72px;">
+    <div class="section-header">
+      <div>
+        <span class="section-label">Medios</span>
+        <h2 class="section-title">Cobertura de Prensa</h2>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px;">
+      <div class="card">
+        <p style="font-size:0.7rem; color:var(--accent); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">Diario Libre · 2022</p>
+        <h3 style="font-family:var(--font-display); font-size:1rem; color:var(--text-primary); margin-bottom:8px;">General Fructuoso Heredia publica narco-novela basada en hechos reales</h3>
+        <p style="font-size:0.83rem; color:var(--text-secondary);">Reseña sobre el lanzamiento de "Capicúa en Ajedrez" y la experiencia del autor como investigador del crimen organizado.</p>
+      </div>
+      <div class="card">
+        <p style="font-size:0.7rem; color:var(--accent); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">Amazon KDP · 2022</p>
+        <h3 style="font-family:var(--font-display); font-size:1rem; color:var(--text-primary); margin-bottom:8px;">Capicúa en Ajedrez disponible a nivel mundial</h3>
+        <p style="font-size:0.83rem; color:var(--text-secondary);">Disponible en formato físico y digital para lectores de todo el mundo a través de Amazon.</p>
+        <a href="https://www.amazon.com/Capic%C3%BAa-ajedrez-Spanish-Fructuoso-Heredia/dp/B09XSVFKF5" target="_blank" rel="noopener" class="btn btn-gold btn-sm" style="margin-top:14px;">Ver en Amazon</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-name">Juan Manuel Fructuoso Heredia</div>
+    <ul class="footer-links">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/libros">Libros</a></li>
+      <li><a href="/biografia">Biografía</a></li>
+      <li><a href="/eventos">Eventos</a></li>
+      <li><a href="/galeria">Galería</a></li>
+    </ul>
+    <p class="footer-copy">&copy; <%= new Date().getFullYear() %> Juan Manuel Fructuoso Heredia. Todos los derechos reservados.</p>
+  </div>
+</footer>
+</body>
+</html>
