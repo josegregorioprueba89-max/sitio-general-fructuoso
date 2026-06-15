@@ -1,0 +1,27 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title><%= titulo %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1><%= titulo %></h1>
+        <nav>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/biografia">Biografía</a></li>
+                <li><a href="/libros">Libros</a></li>
+                <li><a href="/eventos">Eventos</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <p><%= mensaje %></p>
+        <!-- Aquí pondremos los módulos de multimedia después -->
+    </main>
+</body>
+</html>
