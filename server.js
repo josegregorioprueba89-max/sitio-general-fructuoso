@@ -3,12 +3,12 @@ const app = express();
 const path = require('path');
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'vistas'));
+app.use(express.static(path.join(__dirname, 'publico')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ─── DATOS DEL AUTOR ────────────────────────────────────────────────────────
+// ─── DATOS DEL AUTOR ─────────────────────────────────────────────────────────
 const autor = {
   nombre: 'Juan Manuel Fructuoso Heredia',
   titulo: 'General (r) · Abogado · Escritor',
@@ -27,7 +27,7 @@ const autor = {
   }
 };
 
-// ─── DATOS DE LIBROS ─────────────────────────────────────────────────────────
+// ─── DATOS DE LIBROS ──────────────────────────────────────────────────────────
 const libros = [
   {
     id: 1,
@@ -46,7 +46,7 @@ const libros = [
   }
 ];
 
-// ─── LOGROS Y RECONOCIMIENTOS ────────────────────────────────────────────────
+// ─── LOGROS Y RECONOCIMIENTOS ─────────────────────────────────────────────────
 const logros = {
   profesionales: [
     { año: '1990s–2022', titulo: 'General de la Policía Nacional Dominicana', descripcion: 'Más de 30 años de carrera investigativa al servicio del Estado dominicano.' },
@@ -59,7 +59,7 @@ const logros = {
   ]
 };
 
-// ─── EVENTOS ─────────────────────────────────────────────────────────────────
+// ─── EVENTOS ──────────────────────────────────────────────────────────────────
 const eventos = [
   {
     id: 1,
@@ -89,32 +89,26 @@ const eventos = [
   }
 ];
 
-// ─── RESEÑAS (sistema de valoración) ─────────────────────────────────────────
+// ─── RESEÑAS ──────────────────────────────────────────────────────────────────
 let resenas = [
   { id: 1, libroId: 1, usuario: 'María G.', rating: 5, comentario: 'Una novela que te atrapa desde la primera página. La experiencia real del autor se siente en cada línea.', fecha: '2024-03-10', aprobada: true },
   { id: 2, libroId: 1, usuario: 'Carlos R.', rating: 4, comentario: 'Increíble cómo narra hechos reales de manera tan cercana. Muy recomendada.', fecha: '2024-05-22', aprobada: true }
 ];
 
-// ─── USUARIOS (sistema de registro simple) ────────────────────────────────────
+// ─── USUARIOS ─────────────────────────────────────────────────────────────────
 let usuarios = [
   { id: 1, nombre: 'Admin', email: 'admin@fructuosoheredia.com', rol: 'admin', fechaRegistro: '2024-01-01' }
 ];
 
-// ══════════════════════════════════════════════════════════════════════════════
-// RUTAS
-// ══════════════════════════════════════════════════════════════════════════════
-
-// INICIO
+// ─── RUTAS ────────────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
   res.render('index', { autor, libros, eventos, resenas: resenas.filter(r => r.aprobada) });
 });
 
-// LIBROS
 app.get('/libros', (req, res) => {
   res.render('libros', { autor, libros, resenas: resenas.filter(r => r.aprobada) });
 });
 
-// LIBRO INDIVIDUAL
 app.get('/libros/:id', (req, res) => {
   const libro = libros.find(l => l.id === parseInt(req.params.id));
   if (!libro) return res.redirect('/libros');
@@ -122,22 +116,18 @@ app.get('/libros/:id', (req, res) => {
   res.render('libro-detalle', { autor, libro, resenas: resenasLibro });
 });
 
-// BIOGRAFÍA Y LOGROS
 app.get('/biografia', (req, res) => {
   res.render('biografia', { autor, logros });
 });
 
-// EVENTOS
 app.get('/eventos', (req, res) => {
   res.render('eventos', { autor, eventos });
 });
 
-// GALERÍA / MULTIMEDIA
 app.get('/galeria', (req, res) => {
   res.render('galeria', { autor });
 });
 
-// REGISTRO
 app.get('/registro', (req, res) => {
   res.render('registro', { autor, mensaje: null, error: null });
 });
@@ -156,30 +146,23 @@ app.post('/registro', (req, res) => {
   res.render('registro', { autor, mensaje: `¡Bienvenido, ${nombre}! Tu cuenta ha sido creada.`, error: null });
 });
 
-// RESEÑA (POST)
 app.post('/resena', (req, res) => {
   const { libroId, usuario, rating, comentario } = req.body;
-  if (!usuario || !rating || !comentario) {
-    return res.redirect('/libros/' + libroId);
-  }
-  const nueva = {
+  if (!usuario || !rating || !comentario) return res.redirect('/libros/' + libroId);
+  resenas.push({
     id: resenas.length + 1,
     libroId: parseInt(libroId),
-    usuario,
-    rating: parseInt(rating),
-    comentario,
+    usuario, rating: parseInt(rating), comentario,
     fecha: new Date().toISOString().split('T')[0],
     aprobada: true
-  };
-  resenas.push(nueva);
+  });
   res.redirect('/libros/' + libroId + '?resena=enviada');
 });
 
-// INSCRIPCIÓN EVENTO
 app.post('/inscribirse', (req, res) => {
-  const { eventoId, nombre, email } = req.body;
+  const { nombre } = req.body;
   res.redirect('/eventos?inscrito=' + nombre);
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`✅ Portal de Fructuoso Heredia corriendo en puerto ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Portal corriendo en puerto ${PORT}`));
