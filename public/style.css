@@ -1,29 +1,43 @@
-/* Estilos base para que no sea plano */
+/* Estilos profesionales para el sitio del General */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #121212; /* Fondo oscuro similar a tu portal */
+    background-color: #121212; /* Fondo oscuro elegante */
     color: #ffffff;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1000px; /* Aquí corregí el error anterior */
     margin: auto;
     padding: 20px;
 }
 
-/* Tarjetas para que no se vea desordenado */
+/* Tarjetas para separar el contenido y darle volumen */
 .card {
     background-color: #1e1e1e;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
-    border-left: 4px solid #ff4500; /* Color distintivo */
-    margin-bottom: 20px;
+    border-left: 5px solid #ff4500; /* Borde distintivo de marca */
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
 header {
     border-bottom: 2px solid #333;
     padding-bottom: 20px;
     margin-bottom: 30px;
+    text-align: center;
+}
+
+h1 {
+    color: #ff4500;
+}
+
+/* Estilo para los enlaces de navegación */
+nav a {
+    color: #ff4500;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 10px;
 }
