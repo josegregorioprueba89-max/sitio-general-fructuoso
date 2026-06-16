@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usuarios — Admin</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/admin" class="nav-brand">⚙️ Panel Admin <span>Portal Fructuoso Heredia</span></a>
+    <ul class="nav-links">
+      <li><a href="/admin/libros">Libros</a></li>
+      <li><a href="/admin/eventos">Eventos</a></li>
+      <li><a href="/admin/noticias">Noticias</a></li>
+      <li><a href="/admin/usuarios" class="active">Usuarios</a></li>
+      <li><a href="/" target="_blank">Ver sitio →</a></li>
+      <li><a href="/admin/logout" class="nav-cta">Salir</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:60px; padding-bottom:60px;">
+  <div style="margin-bottom:40px;">
+    <a href="/admin" style="font-size:0.85rem; color:var(--text-muted);">← Dashboard</a>
+    <h1 style="font-family:var(--font-display); font-size:1.8rem; color:var(--text-primary); margin-top:12px;">Usuarios y Reseñas</h1>
+  </div>
+
+  <% if (mensaje) { %><div class="form-success">✅ <%= mensaje %></div><% } %>
+
+  <!-- USUARIOS -->
+  <h2 style="font-family:var(--font-display); font-size:1.3rem; color:var(--text-primary); margin-bottom:20px;">👥 Usuarios registrados (<%= usuarios.length %>)</h2>
+  <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:60px;">
+    <% usuarios.forEach(u => { %>
+    <div class="card" style="display:flex; align-items:center; justify-content:space-between; padding:16px 24px;">
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div style="width:40px; height:40px; border-radius:50%; background:var(--accent-dim); border:1px solid rgba(126,184,196,0.3); display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:var(--accent); font-weight:700; flex-shrink:0;">
+          <%= u.nombre.charAt(0).toUpperCase() %>
+        </div>
+        <div>
+          <p style="font-weight:600; color:var(--text-primary); font-size:0.9rem;"><%= u.nombre %></p>
+          <p style="font-size:0.78rem; color:var(--text-muted);"><%= u.email %> · Registro: <%= u.fechaRegistro %></p>
+        </div>
+      </div>
+      <span style="font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:3px 10px; border-radius:4px;
+        background:<%= u.rol === 'admin' ? 'rgba(201,168,76,0.15)' : 'var(--accent-dim)' %>;
+        color:<%= u.rol === 'admin' ? 'var(--gold)' : 'var(--accent)' %>;
+        border:1px solid <%= u.rol === 'admin' ? 'rgba(201,168,76,0.3)' : 'rgba(126,184,196,0.25)' %>;">
+        <%= u.rol %>
+      </span>
+    </div>
+    <% }) %>
+  </div>
+
+  <!-- RESEÑAS -->
+  <h2 style="font-family:var(--font-display); font-size:1.3rem; color:var(--text-primary); margin-bottom:20px;">⭐ Reseñas (<%= resenas.length %>)</h2>
+  <div style="display:flex; flex-direction:column; gap:12px;">
+    <% resenas.forEach(r => { %>
+    <div class="card" style="display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding:16px 24px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+          <span style="font-weight:600; color:var(--text-primary); font-size:0.9rem;"><%= r.usuario %></span>
+          <div style="display:flex; gap:2px;">
+            <% for(let i=1;i<=5;i++){%><span style="color:<%= i<=r.rating?'var(--gold)':'var(--text-muted)' %>; font-size:0.8rem;">★</span><%}%>
+          </div>
+          <span style="font-size:0.75rem; color:var(--text-muted);"><%= r.fecha %></span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-secondary);"><%= r.comentario %></p>
+      </div>
+      <form action="/admin/resenas/eliminar/<%= r.id %>" method="POST" onsubmit="return confirm('¿Eliminar esta reseña?')" style="flex-shrink:0;">
+        <button type="submit" class="btn btn-sm" style="background:rgba(220,60,60,0.15); color:#f08080; border:1px solid rgba(220,60,60,0.3);">Eliminar</button>
+      </form>
+    </div>
+    <% }) %>
+  </div>
+</div>
+</body>
+</html>
