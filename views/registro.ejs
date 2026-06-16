@@ -19,39 +19,30 @@
       <li><a href="/libros">Libros</a></li>
       <li><a href="/biografia">Biografía</a></li>
       <li><a href="/eventos">Eventos</a></li>
+      <li><a href="/noticias">Noticias</a></li>
       <li><a href="/galeria">Galería</a></li>
-      <li><a href="/registro" class="nav-cta">Registrarse</a></li>
+      <li><a href="/contacto">Contacto</a></li>
+      <li><a href="/registro" class="nav-cta active">Registrarse</a></li>
     </ul>
   </div>
 </nav>
 
 <div class="auth-wrapper">
   <div class="auth-card">
-
     <h1 class="auth-title">Crear cuenta</h1>
     <p class="auth-subtitle">Únete a la comunidad de lectores de <%= autor.nombre %></p>
 
-    <!-- MENSAJE DE ERROR -->
     <% if (error) { %>
-    <div class="form-error" role="alert">
-      ⚠️ <%= error %>
-    </div>
+    <div class="form-error" role="alert">⚠️ <%= error %></div>
     <% } %>
 
-    <!-- MENSAJE DE ÉXITO -->
     <% if (mensaje) { %>
-    <div class="form-success" role="status">
-      ✅ <%= mensaje %>
-    </div>
-    <a href="/" class="btn btn-primary btn-full" style="margin-top:16px;">
-      Ir al inicio
-    </a>
+    <div class="form-success" role="status">✅ <%= mensaje %></div>
+    <a href="/" class="btn btn-primary btn-full" style="margin-top:16px;">Ir al inicio →</a>
 
     <% } else { %>
 
-    <!-- FORMULARIO -->
     <form action="/registro" method="POST" novalidate>
-
       <div class="form-group">
         <label class="form-label" for="nombre">Nombre completo</label>
         <input
@@ -92,9 +83,7 @@
           required
           minlength="8"
         />
-        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:5px; display:block;">
-          Mínimo 8 caracteres.
-        </span>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:5px; display:block;">Mínimo 8 caracteres.</span>
       </div>
 
       <div class="form-group">
@@ -110,9 +99,7 @@
         />
       </div>
 
-      <button type="submit" class="btn btn-primary btn-full">
-        Crear cuenta
-      </button>
+      <button type="submit" class="btn btn-primary btn-full">Crear cuenta</button>
     </form>
 
     <p style="text-align:center; margin-top:20px; font-size:0.83rem; color:var(--text-muted);">
@@ -123,6 +110,16 @@
   </div>
 </div>
 
+<a href="https://wa.me/18093041128" target="_blank" rel="noopener"
+   style="position:fixed; bottom:28px; right:28px; z-index:999;
+          background:#25d366; color:#fff; border-radius:50%;
+          width:60px; height:60px; display:flex; align-items:center; justify-content:center;
+          font-size:1.8rem; box-shadow:0 4px 20px rgba(37,211,102,0.45);
+          text-decoration:none; transition:transform 0.2s ease;"
+   onmouseover="this.style.transform='scale(1.1)'"
+   onmouseout="this.style.transform='scale(1)'"
+   title="Contactar por WhatsApp">💬</a>
+
 <footer class="footer">
   <div class="container">
     <div class="footer-name">Juan Manuel Fructuoso Heredia</div>
@@ -131,11 +128,12 @@
       <li><a href="/libros">Libros</a></li>
       <li><a href="/biografia">Biografía</a></li>
       <li><a href="/eventos">Eventos</a></li>
+      <li><a href="/noticias">Noticias</a></li>
       <li><a href="/galeria">Galería</a></li>
+      <li><a href="/contacto">Contacto</a></li>
     </ul>
     <p class="footer-copy">&copy; <%= new Date().getFullYear() %> Juan Manuel Fructuoso Heredia. Todos los derechos reservados.</p>
   </div>
 </footer>
-
 </body>
 </html>
