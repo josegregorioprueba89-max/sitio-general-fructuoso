@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,125 +20,42 @@
       <li><a href="/biografia">Biografía</a></li>
       <li><a href="/eventos">Eventos</a></li>
       <li><a href="/galeria">Galería</a></li>
-      <li><a href="/registro" class="nav-cta">Registrarse</a></li>
     </ul>
   </div>
 </nav>
 
 <div class="container">
   <div class="page-header">
-    <a href="/libros" style="font-size:0.85rem; color:var(--text-muted); display:inline-block; margin-bottom:16px;">← Volver a libros</a>
-    <span class="section-label"><%= libro.genero %></span>
+    <a href="/libros" style="color:var(--text-muted); text-decoration:none;">← Volver a libros</a>
+    <span class="section-label" style="margin-top:20px;"><%= libro.genero %></span>
     <h1><%= libro.titulo %></h1>
     <p><%= libro.subtitulo %> · <%= libro.anio %> · <%= libro.paginas %> páginas</p>
   </div>
 
-  <div style="display:grid; grid-template-columns:300px 1fr; gap:48px; align-items:start; margin-bottom:60px;">
+  <div style="display:grid; grid-template-columns: 1fr; gap:48px;">
+    <!-- Portada y Compra -->
     <div>
-      <div class="book-cover-placeholder" style="border-radius:var(--radius-lg); border:1px solid var(--border);">
-        <span class="book-icon" style="font-size:4rem;">📖</span>
-        <span style="font-size:0.9rem; color:var(--text-muted);">Portada del libro</span>
+      <div class="book-cover-placeholder">
+        <span class="book-icon">📖</span>
+        <span><%= libro.titulo %></span>
       </div>
-      <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
-        <a href="<%= libro.enlaceAmazon %>" target="_blank" rel="noopener" class="btn btn-gold btn-full">
-          📦 Comprar en Amazon — <%= libro.precio %>
-        </a>
-        <div class="amazon-badge" style="justify-content:center;">★ Disponible en Amazon KDP</div>
-      </div>
+      <a href="<%= libro.enlaceAmazon %>" target="_blank" class="btn btn-gold btn-full">
+        Comprar en Amazon — <%= libro.precio %>
+      </a>
     </div>
 
+    <!-- Detalles -->
     <div>
-      <div class="stars" style="margin-bottom:16px;">
-        <% for(let i = 1; i <= 5; i++) { %>
-          <span class="star <%= i <= Math.round(libro.rating) ? 'filled' : 'empty' %>" style="font-size:1.2rem;">★</span>
-        <% } %>
-        <span class="rating-count" style="font-size:0.9rem;"><%= libro.rating %>/5 · <%= libro.totalResenas %> reseñas</span>
+      <h2 style="font-family:var(--font-display);">Sinopsis</h2>
+      <p style="margin-top:20px;"><%= libro.sinopsis %></p>
+      
+      <div style="margin-top:30px; background:var(--bg-subtle); padding:20px; border-radius:var(--radius);">
+        <p>📅 Año: <strong><%= libro.anio %></strong></p>
+        <p>📄 Páginas: <strong><%= libro.paginas %></strong></p>
       </div>
-
-      <h2 style="font-family:var(--font-display); font-size:1.3rem; color:var(--text-primary); margin-bottom:16px;">Sinopsis</h2>
-      <p style="color:var(--text-secondary); line-height:1.8; font-size:0.95rem;"><%= libro.sinopsis %></p>
-
-      <div style="margin-top:32px; padding:20px; background:var(--bg-subtle); border-radius:var(--radius); border:1px solid var(--border);">
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.1em; font-weight:600;">Detalles</p>
-        <p style="color:var(--text-secondary); font-size:0.9rem;">📅 Año: <strong style="color:var(--text-primary);"><%= libro.anio %></strong></p>
-        <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:6px;">📄 Páginas: <strong style="color:var(--text-primary);"><%= libro.paginas %></strong></p>
-        <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:6px;">🏷️ Género: <strong style="color:var(--text-primary);"><%= libro.genero %></strong></p>
-      </div>
-    </div>
-  </div>
-
-  <div style="border-top:1px solid var(--border); padding-top:60px; margin-bottom:60px;">
-    <div class="section-header">
-      <div>
-        <span class="section-label">Lectores</span>
-        <h2 class="section-title">Reseñas</h2>
-      </div>
-    </div>
-
-    <% if (resenas && resenas.length > 0) { %>
-    <div class="reviews-list" style="margin-bottom:48px;">
-      <% resenas.forEach(resena => { %>
-      <div class="review-card">
-        <div class="review-header">
-          <div>
-            <span class="review-author"><%= resena.usuario %></span>
-            <div class="stars" style="margin-top:4px">
-              <% for(let i = 1; i <= 5; i++) { %>
-                <span class="star <%= i <= resena.rating ? 'filled' : 'empty' %>">★</span>
-              <% } %>
-            </div>
-          </div>
-          <span class="review-date"><%= resena.fecha %></span>
-        </div>
-        <p class="review-text"><%= resena.comentario %></p>
-      </div>
-      <% }) %>
-    </div>
-    <% } else { %>
-    <p style="color:var(--text-muted); margin-bottom:40px;">Sé el primero en dejar una reseña.</p>
-    <% } %>
-
-    <div class="card" style="max-width:560px;">
-      <h3 style="font-family:var(--font-display); font-size:1.2rem; color:var(--text-primary); margin-bottom:24px;">Escribe una reseña</h3>
-      <form action="/resena" method="POST">
-        <input type="hidden" name="libroId" value="<%= libro.id %>" />
-        <div class="form-group">
-          <label class="form-label" for="usuario">Tu nombre</label>
-          <input class="form-input" type="text" id="usuario" name="usuario" placeholder="Ej: María García" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="rating">Calificación</label>
-          <select class="form-select" id="rating" name="rating" required>
-            <option value="">Selecciona una calificación</option>
-            <option value="5">★★★★★ Excelente (5)</option>
-            <option value="4">★★★★☆ Muy bueno (4)</option>
-            <option value="3">★★★☆☆ Bueno (3)</option>
-            <option value="2">★★☆☆☆ Regular (2)</option>
-            <option value="1">★☆☆☆☆ Malo (1)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="comentario">Tu reseña</label>
-          <textarea class="form-textarea" id="comentario" name="comentario" placeholder="Comparte tu experiencia con este libro..." required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-full">Publicar reseña</button>
-      </form>
     </div>
   </div>
 </div>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-name">Juan Manuel Fructuoso Heredia</div>
-    <ul class="footer-links">
-      <li><a href="/">Inicio</a></li>
-      <li><a href="/libros">Libros</a></li>
-      <li><a href="/biografia">Biografía</a></li>
-      <li><a href="/eventos">Eventos</a></li>
-      <li><a href="/galeria">Galería</a></li>
-    </ul>
-    <p class="footer-copy">&copy; <%= new Date().getFullYear() %> Juan Manuel Fructuoso Heredia. Todos los derechos reservados.</p>
-  </div>
-</footer>
 </body>
 </html>
