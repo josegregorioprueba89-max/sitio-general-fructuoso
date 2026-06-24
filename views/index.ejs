@@ -54,4 +54,15 @@
     </section>
   </div>
 </body>
-</html>
+</html><section>
+      <h2 class="section-title">Noticias Recientes</h2>
+      <div class="noticias-grid">
+        <% noticias.forEach(noticia => { %>
+          <div class="event-card">
+            <h3><%= noticia.titulo %></h3>
+            <p><%= noticia.resumen %></p>
+            <small><%= noticia.fecha %></small>
+          </div>
+        <% }) %>
+      </div>
+    </section>
