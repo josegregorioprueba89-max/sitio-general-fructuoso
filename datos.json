@@ -1,0 +1,19 @@
+{
+  "libros": [
+    {
+      "titulo": "Capicúa en Ajedrez",
+      "precio": "$14.99",
+      "link": "https://www.amazon.com/...",
+      "portada": "/img/capicua-portada.jpg",
+      "sinopsis": "Tu sinopsis aquí..."
+    }
+  ],
+  "noticias": [
+    {
+      "titulo": "Entrevista exclusiva",
+      "resumen": "Resumen de la entrevista...",
+      "fecha": "2026-06-24",
+      "link": "#"
+    }
+  ]
+}
