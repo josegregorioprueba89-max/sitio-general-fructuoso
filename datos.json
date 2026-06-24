@@ -1,4 +1,9 @@
 {
+  "autor": { 
+    "nombre": "Juan Manuel Fructuoso Heredia", 
+    "tagline": "Escritor y General (r)", 
+    "biografia": "Su historia aquí..." 
+  },
   "libros": [
     {
       "titulo": "Capicúa en Ajedrez",
@@ -15,5 +20,15 @@
       "fecha": "2026-06-24",
       "link": "#"
     }
+  ],
+  "eventos": [
+    {
+      "titulo": "Presentación del libro",
+      "lugar": "Biblioteca Nacional"
+    }
+  ],
+  "galeria": [
+    { "titulo": "Entrevista TV", "url": "https://youtube.com/..." },
+    { "titulo": "Foto de Autor", "url": "/img/foto.jpg" }
   ]
 }
