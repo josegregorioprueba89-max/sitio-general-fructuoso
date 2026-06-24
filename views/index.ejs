@@ -1,163 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicio — Juan Manuel Fructuoso Heredia</title>
-  <meta name="description" content="Portal oficial del General (r) Juan Manuel Fructuoso Heredia — Abogado y escritor dominicano." />
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="/" class="nav-brand">
-      Juan Manuel Fructuoso Heredia
-      <span>General (r) · Abogado · Escritor</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="/" class="active">Inicio</a></li>
-      <li><a href="/libros">Libros</a></li>
-      <li><a href="/biografia">Biografía</a></li>
-      <li><a href="/eventos">Eventos</a></li>
-      <li><a href="/galeria">Galería</a></li>
-      <li><a href="/registro" class="nav-cta">Registrarse</a></li>
-    </ul>
-  </div>
-</nav>
-
-<div class="container">
-  <section class="hero">
-    <div class="hero-content">
-      <p class="hero-eyebrow">Portal Oficial</p>
+  <nav class="nav"><a href="/" class="nav-brand">Juan Manuel Fructuoso Heredia</a></nav>
+  
+  <div class="container">
+    <section class="hero">
       <h1><%= autor.nombre %></h1>
       <p class="hero-tagline"><%= autor.tagline %></p>
-      <div class="hero-actions">
-        <a href="/libros" class="btn btn-primary">📚 Ver mis libros</a>
-        <a href="/biografia" class="btn btn-outline">Conocer al autor</a>
-      </div>
-    </div>
-    <div class="hero-photo">
-      <div class="hero-photo-placeholder">📷<br />Foto del autor</div>
-    </div>
-  </section>
-</div>
+    </section>
 
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <span class="section-label">Obra literaria</span>
-        <h2 class="section-title">Mis Libros</h2>
-      </div>
-      <a href="/libros" class="btn btn-outline btn-sm">Ver todos →</a>
-    </div>
-    <div class="books-grid">
-      <% libros.forEach(libro => { %>
-      <div class="book-card">
-        <div class="book-cover-placeholder">
-          <span class="book-icon">📖</span>
-          <span><%= libro.titulo %></span>
-        </div>
-        <div class="book-info">
-          <p class="book-genre"><%= libro.genero %></p>
-          <h3 class="book-title"><%= libro.titulo %></h3>
-          <p class="book-excerpt"><%= libro.sinopsis %></p>
-          <div class="book-meta">
+    <section>
+      <h2 class="section-title">Mis Libros</h2>
+      <div class="books-grid">
+        <% libros.forEach(libro => { %>
+          <div class="book-card">
+            <h3><%= libro.titulo %></h3>
+            <p><%= libro.sinopsis %></p>
             <span class="book-price"><%= libro.precio %></span>
-            <div class="stars">
-              <% for(let i = 1; i <= 5; i++) { %>
-                <span class="star <%= i <= Math.round(libro.rating) ? 'filled' : 'empty' %>">★</span>
-              <% } %>
-              <span class="rating-count">(<%= libro.totalResenas %>)</span>
-            </div>
+            <a href="<%= libro.enlace %>" class="btn-gold">Comprar en Amazon</a>
           </div>
-          <a href="<%= libro.enlaceAmazon %>" target="_blank" rel="noopener" class="btn btn-gold btn-sm btn-full">Comprar en Amazon</a>
-        </div>
+        <% }) %>
       </div>
-      <% }) %>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <span class="section-label">Agenda</span>
-        <h2 class="section-title">Próximos Eventos</h2>
-      </div>
-      <a href="/eventos" class="btn btn-outline btn-sm">Ver todos →</a>
-    </div>
-    <div class="events-list">
-      <% eventos.slice(0, 2).forEach(evento => { %>
-      <%
-        const fechaEvento = new Date(evento.fecha + 'T00:00:00');
-        const dia = fechaEvento.getDate();
-        const mes = fechaEvento.toLocaleDateString('es-DO', { month: 'short' }).toUpperCase();
-      %>
-      <div class="event-card">
-        <div class="event-date-block">
-          <div class="event-day"><%= dia %></div>
-          <div class="event-month"><%= mes %></div>
+    <section style="margin-top:50px;">
+      <h2 class="section-title">Próximos Eventos</h2>
+      <% eventos.forEach(evento => { %>
+        <div class="event-card">
+          <h3><%= evento.titulo %></h3>
+          <p><%= evento.lugar %></p>
         </div>
-        <div class="event-info">
-          <span class="event-type-badge"><%= evento.tipo %></span>
-          <h3 class="event-title"><%= evento.titulo %></h3>
-          <p class="event-meta">🕐 <%= evento.hora %> · 📍 <%= evento.lugar %>, <%= evento.ciudad %></p>
-        </div>
-        <% if (evento.inscripcionAbierta) { %>
-        <a href="/eventos" class="btn btn-primary btn-sm">Inscribirse</a>
-        <% } %>
-      </div>
       <% }) %>
-    </div>
+    </section>
   </div>
-</section>
-
-<% if (resenas && resenas.length > 0) { %>
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <span class="section-label">Lectores</span>
-        <h2 class="section-title">Reseñas</h2>
-      </div>
-    </div>
-    <div class="reviews-list">
-      <% resenas.slice(0, 3).forEach(resena => { %>
-      <div class="review-card">
-        <div class="review-header">
-          <div>
-            <span class="review-author"><%= resena.usuario %></span>
-            <div class="stars" style="margin-top:4px">
-              <% for(let i = 1; i <= 5; i++) { %>
-                <span class="star <%= i <= resena.rating ? 'filled' : 'empty' %>">★</span>
-              <% } %>
-            </div>
-          </div>
-          <span class="review-date"><%= resena.fecha %></span>
-        </div>
-        <p class="review-text"><%= resena.comentario %></p>
-      </div>
-      <% }) %>
-    </div>
-  </div>
-</section>
-<% } %>
-
-<footer class="footer">
-  <div class="container">
-    <div class="footer-name">Juan Manuel Fructuoso Heredia</div>
-    <ul class="footer-links">
-      <li><a href="/">Inicio</a></li>
-      <li><a href="/libros">Libros</a></li>
-      <li><a href="/biografia">Biografía</a></li>
-      <li><a href="/eventos">Eventos</a></li>
-      <li><a href="/galeria">Galería</a></li>
-    </ul>
-    <p class="footer-copy">&copy; <%= new Date().getFullYear() %> Juan Manuel Fructuoso Heredia. Todos los derechos reservados.</p>
-  </div>
-</footer>
 </body>
 </html>
